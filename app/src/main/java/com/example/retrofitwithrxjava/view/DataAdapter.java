@@ -24,7 +24,10 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     }
 
   public   void updateData(List<User> data) {
-        this.mData = data;
+//        this.mData = data;
+        mData.clear();
+        mData.addAll(data);
+
         notifyDataSetChanged();
     }
 

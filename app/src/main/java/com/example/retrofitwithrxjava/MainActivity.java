@@ -17,9 +17,16 @@ import com.example.retrofitwithrxjava.model.AlbumModel;
 import com.example.retrofitwithrxjava.model.User;
 import com.example.retrofitwithrxjava.view.DataAdapter;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,8 +54,67 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.setAdapter(adapter);
 
 
-
         JsonPlaceHolderService service = ApiClient.createService(JsonPlaceHolderService.class);
+        getAlbums(service);
+        getUsers(service, adapter);
+        getUsersObservable(service, adapter);
+        Observable<Integer> just = Observable.just(1, 23, 4);
+    }
+
+    private static void getUsers(JsonPlaceHolderService service, DataAdapter adapter) {
+        service.getUsers().enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                Log.d(tag, "User onResponse: " + response.body().size());
+                List<User> users = response.body();
+//                adapter.updateData(users);
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable throwable) {
+                Log.d(tag, "onFailure: " + throwable.getMessage());
+            }
+        });
+    }
+
+    private static void getUsersObservable(JsonPlaceHolderService service, DataAdapter adapter) {
+        Disposable subscribe = service.getUsersObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(users -> {
+                    Log.d(tag, "getUsersObservable: " + users.get(1).name);
+                    adapter.updateData(users);
+                });
+
+        /*service.getUsersObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<User>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull List<User> users) {
+                        Log.d(tag, "getUsersObservable: " + users.get(1).name);
+                        adapter.updateData(users);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });*/
+
+    }
+
+    private static void getAlbums(JsonPlaceHolderService service) {
         service.getAlbums().enqueue(new Callback<List<AlbumModel>>() {
             @Override
             public void onResponse(Call<List<AlbumModel>> call, Response<List<AlbumModel>> response) {
@@ -60,22 +126,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(tag, "onFailure: " + throwable.getMessage());
             }
         });
-
-
-        service.getUsers().enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                Log.d(tag, "User onResponse: " + response.body().size());
-                List<User> users = response.body();
-                adapter.updateData(users);
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable throwable) {
-                Log.d(tag, "onFailure: " + throwable.getMessage());
-            }
-        });
-
-
     }
 }

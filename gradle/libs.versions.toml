@@ -9,6 +9,9 @@ activity = "1.8.0"
 constraintlayout = "2.1.4"
 retrofit = "2.11.0"
 gson = "2.11.0"
+rxAdapter = "2.11.0"
+#rxJava = "3.1.8"
+rxAndroid ="3.0.2"
 
 
 
@@ -25,6 +28,9 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 # This party
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 gsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "gson" }
+rxJavaAdapter = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "rxAdapter" }
+#rxJava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxJava" }
+rxAndroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxAndroid" }
 #moshi = { module = "", version.ref = "gson" }
 
 

@@ -48,5 +48,7 @@ dependencies {
     //Third Party
     implementation(libs.retrofit)
     implementation(libs.gsonConverter)
+    implementation(libs.rxJavaAdapter)
+    implementation(libs.rxAndroid)
 
 }
