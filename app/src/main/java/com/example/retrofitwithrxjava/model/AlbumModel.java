@@ -1,4 +1,4 @@
-package com.example.retrofitwithrxjava.domain;
+package com.example.retrofitwithrxjava.model;
 
 public class AlbumModel {
     public int userId;

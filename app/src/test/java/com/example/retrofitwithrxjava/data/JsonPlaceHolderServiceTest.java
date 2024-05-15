@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import android.util.Log;
 
-import com.example.retrofitwithrxjava.domain.AlbumModel;
+import com.example.retrofitwithrxjava.model.AlbumModel;
 
 import org.junit.Test;
 

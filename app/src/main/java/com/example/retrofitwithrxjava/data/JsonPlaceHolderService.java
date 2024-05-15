@@ -1,7 +1,7 @@
 package com.example.retrofitwithrxjava.data;
 
-import com.example.retrofitwithrxjava.domain.AlbumModel;
-import com.example.retrofitwithrxjava.domain.User;
+import com.example.retrofitwithrxjava.model.AlbumModel;
+import com.example.retrofitwithrxjava.model.User;
 
 import java.util.List;
 
@@ -16,8 +16,5 @@ public interface JsonPlaceHolderService {
 
     @GET("/users")
     public Call<List<User>> getUsers();
-
-
-
 
 }

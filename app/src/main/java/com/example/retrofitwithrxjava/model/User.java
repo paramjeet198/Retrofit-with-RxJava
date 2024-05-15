@@ -1,4 +1,4 @@
-package com.example.retrofitwithrxjava.domain;
+package com.example.retrofitwithrxjava.model;
 
 public class User {
     public int id;
